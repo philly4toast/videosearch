@@ -1,18 +1,21 @@
 import React from 'react';
+import VideoItem from './VideoItem'
 
 class VideoList extends React.Component {
 
   render () {
     return (
         <div>
+          
           <h2 class='videoList'>
-            <div>boogie woogie</div>
-            <div>oogie loogie</div>
-            <div>googie koogie</div>
-            <div>foogie voogie</div>
+            <VideoItem/>
+            <VideoItem/>
+            <VideoItem/>
+            <VideoItem/>
+            <VideoItem/>
           </h2>
+          
         </div>
-
     )
   }
 

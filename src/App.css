@@ -24,6 +24,19 @@
   color: white;
 }
 
+.App-header input[type=text] {
+  position: fixed;
+  top:20px;  
+  float: right;
+  padding: 6px;
+  border: none;
+  z-index: 2;
+  /* margin-top: 8px; */
+  /* margin-right: 16px; */
+  font-size: 17px;
+  border: 1px solid #ccc;
+}
+
 .App-link {
   color: #61dafb;
 }

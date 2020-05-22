@@ -7,9 +7,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <input type="text" placeholder="Search.."></input>
+
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/RVD-ZErweBk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Main Video player goes here
         </p>
         <a
           className="App-link"
