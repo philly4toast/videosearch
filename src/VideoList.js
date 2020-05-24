@@ -7,7 +7,7 @@ class VideoList extends React.Component {
     return (
         <div>
           
-          <h2 class='videoList'>
+          <h2 className='videoList'>
             <VideoItem/>
             <VideoItem/>
             <VideoItem/>

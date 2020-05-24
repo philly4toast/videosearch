@@ -24,18 +24,9 @@
   color: white;
 }
 
-.App-header input[type=text] {
-  position: fixed;
-  top:20px;  
-  float: right;
-  padding: 6px;
-  border: none;
-  z-index: 2;
-  /* margin-top: 8px; */
-  /* margin-right: 16px; */
-  font-size: 17px;
-  border: 1px solid #ccc;
-}
+/* .App-header input[type=text] {
+
+} */
 
 .App-link {
   color: #61dafb;
@@ -48,4 +39,28 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.mainplayer {
+  /* border: 2px solid white; */
+  margin: 37px 165px 75px -5px;
+  background-color:black;
+}
+
+.mainPlayerTV {
+border: 2px solid white;
+background-color: black;
+padding: 90px;
+/* background-image: url('../public/old-television-12.png'); */
+}
+
+.searchBr{
+  margin: auto;
+  /* position: fixed; */
+  top:20px;  
+  padding: 6px;
+  /* border: none; */
+  z-index: 2;
+  font-size: 15px;
+  border: 1px solid #ccc;
 }

@@ -4,8 +4,10 @@ import React from 'react';
 class MainPlayer extends React.Component {
 
   render () {
-    return (
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/zLrOWD8nu70" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    return (<div className='mainplayer'>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kIRab-Rn_Ik" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+    </div>
     )
   }
 

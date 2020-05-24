@@ -8,19 +8,18 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <input type="text" placeholder="Search.."></input>
 
-        <p>
+
+      <div className='searchBr'>
+        <input type="text" placeholder="Search.."></input>
+        <button onClick={()=>console.log('clickity')}>Find music videos</button>
+      </div>
+
+      <div style={{'backgroundImage': `url(${'./old-television-12.png'})`}} className='mainPlayerTV'>
+        {/* <img src="old-television-12.png"/> */}
           <MainPlayer/>
-        </p>
-        <a
-          className="App-link"
-          href="https://www.youtube.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          checkout youtube
-        </a>
+
+      </div>
       </header>
       <VideoList/>
     </div>
