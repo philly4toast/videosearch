@@ -9,28 +9,26 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      artistName: ''
+      artistName: '',
+      artistMVs: ''
     }
     this.typingArtistName = this.typingArtistName.bind(this)
     this.searchArtist = this.searchArtist.bind(this)
   }
 
 searchArtist(event) { 
-
   let searchArtist = this.state.artistName;
-
   let baseURL = 'https://www.googleapis.com/youtube/v3/'
-
   let requestURL = baseURL+'search?part=snippet'+
                        '&type=video'+
                        '&q=' + searchArtist + 'music videos' +
                        '&key=AIzaSyDKUYdvAkLYCBxOfE5tpfNJNBxAxSu2qSw'
-  
   axios.get(requestURL)
-  
-  // key=AIzaSyDKUYdvAkLYCBxOfE5tpfNJNBxAxSu2qSw
   .then((response) => {
-    console.log(response.data.items);
+    this.setState({
+      artistMVs: response.data.items
+    })
+    console.log(this.state.artistMVs);
   }, (error) => {
     console.log(error);
   });
@@ -59,7 +57,7 @@ render(){
 
       </div>
       </header>
-      <VideoList/>
+      <VideoList musicVideos={this.state.artistMVs}/>
     </div>
   );
 }

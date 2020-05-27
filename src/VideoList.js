@@ -1,16 +1,15 @@
 import React from 'react';
 import VideoItem from './VideoItem'
-const axios = require('axios')
+
 
 class VideoList extends React.Component {
-
-  componentDidMount(){
-    axios.get()
-
-  }
-
-
+  
   render () {
+    console.log('video list', this.props)
+
+    
+
+
     return (
         <div>
           
