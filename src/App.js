@@ -44,6 +44,7 @@ typingArtistName(event){
 
 handleClick(youtubeid){
   console.log('hello', youtubeid)
+  this.setState({mainPlVid: youtubeid})
 }
 
 render(){
