@@ -15,6 +15,7 @@ class VideoList extends React.Component {
           key={musicVideo.id}
           videoId={musicVideo.id.videoId}
           info={musicVideo}
+          onClick={this.props.onClick}
           />
         </div>
         )

@@ -15,6 +15,7 @@ class App extends React.Component {
     }
     this.typingArtistName = this.typingArtistName.bind(this)
     this.searchArtist = this.searchArtist.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
 searchArtist(event) { 
@@ -40,6 +41,11 @@ typingArtistName(event){
   this.setState({artistName: event.target.value})
   console.log(event.target.value)
 }
+
+handleClick(youtubeid){
+  console.log('hello', youtubeid)
+}
+
 render(){
 
   return (
@@ -58,7 +64,7 @@ render(){
 
       </div>
       </header>
-      <VideoList musicVideos={this.state.artistMVs}/>
+      <VideoList onClick={this.handleClick} musicVideos={this.state.artistMVs}/>
     </div>
   );
 }
