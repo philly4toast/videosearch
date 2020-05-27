@@ -17,7 +17,7 @@ axios.get(requestURL)
 
 // key=AIzaSyDKUYdvAkLYCBxOfE5tpfNJNBxAxSu2qSw
 .then((response) => {
-  console.log(response.data.items[0].id);
+  console.log(response.data.items);
 }, (error) => {
   console.log(error);
 });
