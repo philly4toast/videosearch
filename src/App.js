@@ -10,7 +10,8 @@ class App extends React.Component {
     super(props)
     this.state = {
       artistName: '',
-      artistMVs: ''
+      artistMVs: '',
+      mainPlVid: ''
     }
     this.typingArtistName = this.typingArtistName.bind(this)
     this.searchArtist = this.searchArtist.bind(this)
@@ -26,7 +27,8 @@ searchArtist(event) {
   axios.get(requestURL)
   .then((response) => {
     this.setState({
-      artistMVs: response.data.items
+      artistMVs: response.data.items,
+      mainPlVid: response.data.items[0].id.videoId
     })
   }, (error) => {
     console.log(error);
@@ -52,7 +54,7 @@ render(){
 
       <div style={{'backgroundImage': `url(${'./old-television-12.png'})`}} className='mainPlayerTV'>
         {/* <img src="old-television-12.png"/> */}
-          <MainPlayer vidInfo={this.state.artistMVs[0]}/>
+          <MainPlayer vidInfo={this.state.mainPlVid}/>
 
       </div>
       </header>

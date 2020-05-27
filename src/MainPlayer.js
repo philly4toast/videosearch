@@ -8,7 +8,7 @@ class MainPlayer extends React.Component {
     if (this.props.vidInfo){
 
       // console.log('mainplayer properties', this.props.vidInfo.id)
-      videoId = this.props.vidInfo.id.videoId
+      videoId = this.props.vidInfo
     }
 
     return (<div className='mainplayer'>
