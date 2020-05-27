@@ -7,7 +7,7 @@ class MainPlayer extends React.Component {
     var videoId = 'kIRab-Rn_Ik';
     if (this.props.vidInfo){
 
-      console.log('mainplayer properties', this.props.vidInfo.id)
+      // console.log('mainplayer properties', this.props.vidInfo.id)
       videoId = this.props.vidInfo.id.videoId
     }
 

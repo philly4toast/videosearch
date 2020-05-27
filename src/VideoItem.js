@@ -2,18 +2,19 @@ import React from 'react'
 
 
 function VideoItem(props) {
-  console.log('initial', props)
   var thisvideoID = 'https://www.youtube.com/embed/' + props.videoId
   if (props.videoId){
+    console.log('initial', props.info.snippet)
     return (
       <div className='video'>
-        <iframe width="112" height="63" src={thisvideoID} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <img src={props.info.snippet.thumbnails.default.url}/>
+        {props.info.snippet.title}
       </div>
     )
   }else{
 
     return (
-      <div>Look it up yo!</div>
+      <div>Search for an artist to find music videos</div>
     )
   }
 }
