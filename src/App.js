@@ -28,7 +28,6 @@ searchArtist(event) {
     this.setState({
       artistMVs: response.data.items
     })
-    console.log(this.state.artistMVs);
   }, (error) => {
     console.log(error);
   });
@@ -53,7 +52,7 @@ render(){
 
       <div style={{'backgroundImage': `url(${'./old-television-12.png'})`}} className='mainPlayerTV'>
         {/* <img src="old-television-12.png"/> */}
-          <MainPlayer/>
+          <MainPlayer vidInfo={this.state.artistMVs[0]}/>
 
       </div>
       </header>
