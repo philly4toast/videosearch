@@ -39,11 +39,9 @@ searchArtist(event) {
 
 typingArtistName(event){
   this.setState({artistName: event.target.value})
-  console.log(event.target.value)
 }
 
 handleClick(youtubeid){
-  console.log('hello', youtubeid)
   this.setState({mainPlVid: youtubeid})
 }
 
@@ -60,7 +58,6 @@ render(){
       </form>
 
       <div style={{'backgroundImage': `url(${'./old-television-12.png'})`}} className='mainPlayerTV'>
-        {/* <img src="old-television-12.png"/> */}
           <MainPlayer vidInfo={this.state.mainPlVid}/>
 
       </div>
