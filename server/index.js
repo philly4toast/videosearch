@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.listen(port, () => console.log(`Going on port: ${port}`));
 
 
-app.post('/favorites', function(req,res){
+app.post('/', function(req,res){
   console.log(req.body)
 
 

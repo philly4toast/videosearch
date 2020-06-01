@@ -29,16 +29,17 @@ searchArtist(event) {
                        '&q=' + searchArtist + 'music+videos' +
                        '&key=AIzaSyD2UPk5IRDVUAEOT8Em5pUgNY5u7kvvXEQ';
   //disabled api call until clearance
-  console.log(requestURL, 'not called due to api request quota')
-  // axios.get(requestURL)
-  // .then((response) => {
-  //   this.setState({
-  //     artistMVs: response.data.items,
-  //     mainPlVid: response.data.items[0].id.videoId
-  //   })
-  // }, (error) => {
-  //   console.log(error);
-  // });
+  console.log(requestURL)
+  axios.get(requestURL)
+  .then((response) => {
+    console.log(response.data.items)
+    this.setState({
+      artistMVs: response.data.items,
+      mainPlVid: response.data.items[0].id.videoId
+    })
+  }, (error) => {
+    console.log(error);
+  });
 
 
   event.preventDefault()
@@ -55,7 +56,7 @@ loadVidtoMainPlayer(youtubeid){
 addFav(){
   console.log('adding favorites')
 
-  axios.post('/favorites', {
+  axios.post('https://localhost:3002', {
     name: 'JAYX'
   })
   .then(function (response) {
