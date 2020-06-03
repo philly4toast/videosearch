@@ -56,13 +56,21 @@ loadVidtoMainPlayer(youtubeid){
 addFav(){
   console.log('adding favorites')
 
-  axios.post('https://localhost:3002', {
+  axios.post('http://localhost:3001/favo5', {
     name: 'JAYX'
   })
   .then(function (response) {
     console.log(response);
   })
-
+  // axios({
+  //   method: "POST",
+  //   url: "http://localhost:3001/",
+  //   data: {
+  //     "name": "JAYW"
+  //   }
+  // }).then(res => {
+  //   console.log(res.data.message);
+  // });
 
 }
 //selects a video from
