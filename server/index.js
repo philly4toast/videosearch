@@ -29,8 +29,8 @@ connection.connect();
 
 //handles request for getting all favorited artist music videos
 app.get('/favo5', (req, res) => {
-  connection.query('select artVideos from artmusvidvault;', function (error, results, fields) {
-    // console.log(results)
+  connection.query('SELECT artistName FROM artists;', function (error, results, fields) {
+    console.log('be', results)
     res.send(results)
     if (error) throw error;
  })
@@ -39,8 +39,8 @@ app.get('/favo5', (req, res) => {
 app.post('/favo5', function(req,res){
   var addingArtistName = req.body.artistName;
   var addingArtistVideos = req.body.artistVideos
-// add artist to artist table
 
+  // add artist to artist table
   connection.query(`
   INSERT INTO artists (artistName)
   VALUES ('${addingArtistName}');
@@ -51,21 +51,15 @@ connection.query(`
 `, function(error, results, fields){
   console.log(results[0].id)
 
-  //add info to other table
+  //add musicvideoinfo to 2nd table
   addingArtistVideos.forEach(video => {
     connection.query(`
     INSERT INTO artistMVs (description, vidID, vidTHMN, artistID)
     VALUES ('${video.title}' , '${video.videoID}', '${video.thumbnail}', '${results[0].id}');
   `)
   });
-
 })
 
-  //add info to database: artist name attached to video information
-//   connection.query(`
-//   INSERT INTO artMusVidVault (artName,artVideos)
-//   VALUES ('${addingArtistName}' , '${addingArtistVideos}');
-// `)
 
 
   res.send('Got a post request at /favorites')

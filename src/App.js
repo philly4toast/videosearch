@@ -8,7 +8,7 @@ import DRAKEsearch from './DRAKEsearch'
 const axios = require('axios')
 
 //temporary fix for quota maxing api
-const vidIdArr = TLCsearch.items.map(video => { 
+const vidIdArr = DRAKEsearch.items.map(video => { 
   return {
     videoID: video.id.videoId,
     title: video.snippet.title,
@@ -22,7 +22,7 @@ class App extends React.Component {
     this.state = {
       artistName: '',
       artistMVs: '',
-      // favoriteArtists: '' //?? maybe different route
+      favoriteArtists: '', //?? maybe different route
       mainPlVid: ''
     }
     this.typingArtistName = this.typingArtistName.bind(this)
@@ -32,16 +32,25 @@ class App extends React.Component {
     this.addFav = this.addFav.bind(this)
   }
 
-  // componentDidMount(){
-  //   this.getFavList();
-  // }
+  componentDidMount(){
+    this.getFavList();
+  }
 
-  // getFavList(){
-  //   axios.get('http://localhost:3001/favo5')
-  //   .then(response => {
-  //     console.log(response);
-  //   });
-  // }
+  getFavList(){
+    axios.get('http://localhost:3001/favo5')
+    .then(response => {
+      console.log('returned to fe:', response.data);
+
+      var responseArr = response.data;
+      var resultsArr = [];
+      for (var i = 0; i < responseArr.length; i++){
+        resultsArr.push(responseArr[i].artistName)
+      }
+
+      this.setState({favoriteArtists: resultsArr})
+
+    });
+  } 
 
   searchArtist(event) {
     // let searchArtist = this.state.artistName;
@@ -136,7 +145,7 @@ class App extends React.Component {
 
           <div>
 
-            <FivoFave favArtistSelect={this.favArtistSelect} addFav={this.addFav} />
+            <FivoFave favArtistSelect={this.favArtistSelect} addFav={this.addFav} listInfo={this.state.favoriteArtists}/>
           </div>
 
         </header>
