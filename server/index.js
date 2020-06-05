@@ -27,20 +27,25 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-
+//handles request for getting all favorited artist music videos
+app.get('/favo5', (req, res) => {
+  connection.query('select artVideos from artmusvidvault;', function (error, results, fields) {
+    // console.log(results)
+    res.send(results)
+    if (error) throw error;
+ })
+});
 
 app.post('/favo5', function(req,res){
   var addingArtistName = req.body.artistName;
-  var addingArtistVideos = req.body.artistVideos;
+  var addingArtistVideos = req.body.artistVideos
 
-  console.log(addingArtistName, addingArtistVideos)
+  // console.log(addingArtistName, addingArtistVideos, stringArrVid)
 
   //add info to database: artist name attached to video information
   connection.query(`
-  
-  INSERT INTO artMusVidVault (id,artName,artVideos)
+  INSERT INTO artMusVidVault (artName,artVideos)
   VALUES ('${addingArtistName}' , '${addingArtistVideos}');
-
 `)
 
 

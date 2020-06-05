@@ -11,7 +11,7 @@ const axios = require('axios')
 
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       artistName: '',
@@ -26,104 +26,107 @@ class App extends React.Component {
     this.addFav = this.addFav.bind(this)
   }
 
-searchArtist(event) { 
-  // let searchArtist = this.state.artistName;
-  // let baseURL = 'https://www.googleapis.com/youtube/v3/'
-  // let requestURL = baseURL+'search?part=snippet'+
-  //                      '&type=video'+
-  //                      '&q=' + searchArtist + 'music+videos' +
-  //                      '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
-  // //disabled api call until clearance
-  // console.log(requestURL)
-  // axios.get(requestURL)
-  // .then((response) => {
-  //   console.log(response.data.items)
-  //   this.setState({
-  //     currentArtist: this.state.artistName,
-  //     artistMVs: response.data.items,
-  //     mainPlVid: response.data.items[0].id.videoId
-  //   })
-  // }, (error) => {
-  //   console.log(error);
-  // });
+  componentDidMount(){
+    this.getFavList();
+  }
 
-//temporary standin for api quota limits ---> 
-  this.setState({
-    currentArtist: this.state.artistName,
-    artistMVs: DRAKEsearch.items,
-    mainPlVid: DRAKEsearch.items[0].id.videoId
-  })
-//<------//
+  getFavList(){
+    axios.get('http://localhost:3001/favo5')
+    .then(response => {
+      console.log(response);
+    });
+  }
 
-  event.preventDefault()
-}  
+  searchArtist(event) {
+    // let searchArtist = this.state.artistName;
+    // let baseURL = 'https://www.googleapis.com/youtube/v3/'
+    // let requestURL = baseURL+'search?part=snippet'+
+    //                      '&type=video'+
+    //                      '&q=' + searchArtist + 'music+videos' +
+    //                      '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
+    // //disabled api call until clearance
+    // console.log(requestURL)
+    // axios.get(requestURL)
+    // .then((response) => {
+    //   console.log(response.data.items)
+    //   this.setState({
+    //     currentArtist: this.state.artistName,
+    //     artistMVs: response.data.items,
+    //     mainPlVid: response.data.items[0].id.videoId
+    //   })
+    // }, (error) => {
+    //   console.log(error);
+    // });
 
-typingArtistName(event){
-  this.setState({artistName: event.target.value})
-}
+    //temporary standin for api quota limits ---> 
+    this.setState({
+      currentArtist: this.state.artistName,
+      artistMVs: TLCsearch.items,
+      mainPlVid: TLCsearch.items[0].id.videoId
+    })
+    //<------//
 
-loadVidtoMainPlayer(youtubeid){
-  this.setState({mainPlVid: youtubeid})
-}
+    event.preventDefault()
+  }
 
-addFav(){
+  typingArtistName(event) {
+    this.setState({ artistName: event.target.value })
+  }
 
-  //add a faveOne element to fivofave
-  var artName = this.state.currentArtist;
-  var artVids = this.state.artistMVs
+  loadVidtoMainPlayer(youtubeid) {
+    this.setState({ mainPlVid: youtubeid })
+  }
 
+  addFav() {
 
-  axios.post('http://localhost:3001/favo5', {
-  artistName: artName,  
-  artistVideos: artVids
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  // axios({
-  //   method: "POST",
-  //   url: "http://localhost:3001/",
-  //   data: {
-  //     "name": "JAYW"
-  //   }
-  // }).then(res => {
-  //   console.log(res.data.message);
-  // });
+    var artName = this.state.currentArtist;
+    var artVids = this.state.artistMVs
 
-}
+    axios.post('http://localhost:3001/favo5', {
+      artistName: artName,
+      artistVideos: artVids
+    })
+      .then(function (response) {
+        console.log(response);
+        //add a faveOne element to fivofave
+
+      })
+
+  }
 
 
 
 
-//selects a video from
-favArtistSelect(){
-  console.log('load artist to page (awaiting api quota clearnace)')
-}
 
-render(){
+  //selects a video from
+  favArtistSelect() {
+    console.log('load artist to page (awaiting api quota clearnace)')
+  }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-      <form className='searchBr' onSubmit={this.searchArtist}>
-        <input type="text" placeholder="Search.." onChange={this.typingArtistName}></input>
-        <button>Find music videos!!!!!</button>
-      </form>
+  render() {
 
-      <div style={{'backgroundImage': `url(${'./old-television-12.png'})`}} className='mainPlayerTV'>
-          <MainPlayer vidInfo={this.state.mainPlVid}/>
+    return (
+      <div className="App">
+        <header className="App-header">
+          <form className='searchBr' onSubmit={this.searchArtist}>
+            <input type="text" placeholder="Search.." onChange={this.typingArtistName}></input>
+            <button>Find music videos!!!!!</button>
+          </form>
+
+          <div style={{ 'backgroundImage': `url(${'./old-television-12.png'})` }} className='mainPlayerTV'>
+            <MainPlayer vidInfo={this.state.mainPlVid} />
+          </div>
+
+          <div>
+
+            <FivoFave favArtistSelect={this.favArtistSelect} addFav={this.addFav} />
+          </div>
+
+        </header>
+        <VideoList onClick={this.loadVidtoMainPlayer} musicVideos={this.state.artistMVs} />
       </div>
-
-<div>
-
-        <FivoFave favArtistSelect={this.favArtistSelect} addFav={this.addFav}/>
-</div>
-
-      </header>
-      <VideoList onClick={this.loadVidtoMainPlayer} musicVideos={this.state.artistMVs}/>
-    </div>
-  );
-}
+    );
+  }
 }
 
 export default App;
