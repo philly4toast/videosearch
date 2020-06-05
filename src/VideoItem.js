@@ -5,8 +5,8 @@ function VideoItem(props) {
   if (props.videoId){
     return (
       <div onClick={()=>props.onClick(props.videoId)} className='video'>
-        <img src={props.info.snippet.thumbnails.default.url} alt=''/>
-        {props.info.snippet.title}
+        <img src={props.thumbnail} alt=''/>
+        {props.info}
       </div>
     )
   }else{

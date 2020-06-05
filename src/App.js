@@ -8,7 +8,13 @@ import DRAKEsearch from './DRAKEsearch'
 const axios = require('axios')
 
 //temporary fix for quota maxing api
-
+const vidIdArr = TLCsearch.items.map(video => { 
+  return {
+    videoID: video.id.videoId,
+    title: video.snippet.title,
+    thumbnail: video.snippet.thumbnails.default.url
+  }
+})
 
 class App extends React.Component {
   constructor(props) {
@@ -59,12 +65,23 @@ class App extends React.Component {
     // });
 
     //temporary standin for api quota limits ---> 
+    // var vidIdArr = TLCsearch.items.map(video => { 
+    //   return {
+    //     videoID: video.id.videoId,
+    //     title: video.snippet.title
+    //   }
+    // })
+
+    console.log('try this one', vidIdArr[0].videoID)
+
+
     this.setState({
       currentArtist: this.state.artistName,
-      artistMVs: TLCsearch.items,
-      mainPlVid: TLCsearch.items[0].id.videoId
+      artistMVs: vidIdArr,
+      // mainPlVid: TLCsearch.items[0].id.videoId
+      mainPlVid: vidIdArr[0].videoID
     })
-    //<------//
+
 
     event.preventDefault()
   }
@@ -123,7 +140,7 @@ class App extends React.Component {
           </div>
 
         </header>
-        <VideoList onClick={this.loadVidtoMainPlayer} musicVideos={this.state.artistMVs} />
+        <VideoList onClick={this.loadVidtoMainPlayer} musicVideos={vidIdArr} />
       </div>
     );
   }
