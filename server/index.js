@@ -39,16 +39,15 @@ app.get('/favo5', (req, res) => {
 app.post('/favo5', function(req,res){
   var addingArtistName = req.body.artistName;
   var addingArtistVideos = req.body.artistVideos
-  console.log(addingArtistName)
+  console.log(addingArtistVideos)
 // add artist to artist table
 
 
 
-  // console.log(addingArtistName, addingArtistVideos, stringArrVid)
   addingArtistVideos.forEach(video => {
     console.log(`
     INSERT INTO artMusVidVault (artName,artVideos)
-    VALUES ('${addingArtistName}' , '${video.id.videoId}');
+    VALUES ('${addingArtistName}' , '${video.videoID}');
   `)
   });
   //add info to database: artist name attached to video information

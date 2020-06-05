@@ -32,16 +32,16 @@ class App extends React.Component {
     this.addFav = this.addFav.bind(this)
   }
 
-  componentDidMount(){
-    this.getFavList();
-  }
+  // componentDidMount(){
+  //   this.getFavList();
+  // }
 
-  getFavList(){
-    axios.get('http://localhost:3001/favo5')
-    .then(response => {
-      console.log(response);
-    });
-  }
+  // getFavList(){
+  //   axios.get('http://localhost:3001/favo5')
+  //   .then(response => {
+  //     console.log(response);
+  //   });
+  // }
 
   searchArtist(event) {
     // let searchArtist = this.state.artistName;
@@ -140,7 +140,7 @@ class App extends React.Component {
           </div>
 
         </header>
-        <VideoList onClick={this.loadVidtoMainPlayer} musicVideos={vidIdArr} />
+        <VideoList onClick={this.loadVidtoMainPlayer} musicVideos={this.state.artistMVs} />
       </div>
     );
   }

@@ -7,7 +7,6 @@ class VideoList extends React.Component {
   render() {
     const donkey = this.props.musicVideos;
     var currentArtistVideos = donkey;
-    console.log(donkey, 'donkey')
     if (this.props.musicVideos) {
       currentArtistVideos = donkey.map(musicVideo => {
         return (<div>
