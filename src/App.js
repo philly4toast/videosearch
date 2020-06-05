@@ -3,7 +3,11 @@ import MainPlayer from './MainPlayer'
 import './App.css';
 import VideoList from './VideoList'
 import FivoFave from './FivoFave'
+import TLCsearch from './TLCsearch'
+import DRAKEsearch from './DRAKEsearch'
 const axios = require('axios')
+
+//temporary fix for quota maxing api
 
 
 class App extends React.Component {
@@ -22,25 +26,33 @@ class App extends React.Component {
   }
 
 searchArtist(event) { 
-  let searchArtist = this.state.artistName;
-  let baseURL = 'https://www.googleapis.com/youtube/v3/'
-  let requestURL = baseURL+'search?part=snippet'+
-                       '&type=video'+
-                       '&q=' + searchArtist + 'music+videos' +
-                       '&key=AIzaSyD2UPk5IRDVUAEOT8Em5pUgNY5u7kvvXEQ';
-  //disabled api call until clearance
-  console.log(requestURL)
-  axios.get(requestURL)
-  .then((response) => {
-    console.log(response.data.items)
-    this.setState({
-      artistMVs: response.data.items,
-      mainPlVid: response.data.items[0].id.videoId
-    })
-  }, (error) => {
-    console.log(error);
-  });
+  // let searchArtist = this.state.artistName;
+  // let baseURL = 'https://www.googleapis.com/youtube/v3/'
+  // let requestURL = baseURL+'search?part=snippet'+
+  //                      '&type=video'+
+  //                      '&q=' + searchArtist + 'music+videos' +
+  //                      '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
+  // //disabled api call until clearance
+  // console.log(requestURL)
+  // axios.get(requestURL)
+  // .then((response) => {
+  //   console.log(response.data.items)
+  //   this.setState({
+  //     currentArtist: this.state.artistName,
+  //     artistMVs: response.data.items,
+  //     mainPlVid: response.data.items[0].id.videoId
+  //   })
+  // }, (error) => {
+  //   console.log(error);
+  // });
 
+//temporary standin for api quota limits ---> 
+  this.setState({
+    currentArtist: this.state.artistName,
+    artistMVs: DRAKEsearch.items,
+    mainPlVid: DRAKEsearch.items[0].id.videoId
+  })
+//<------//
 
   event.preventDefault()
 }  
@@ -54,10 +66,15 @@ loadVidtoMainPlayer(youtubeid){
 }
 
 addFav(){
-  console.log('adding favorites')
+  console.log(this.state.currentArtist)
+  //add a faveOne element to fivofave
+  var artName = this.state.currentArtist;
+  var artVids = this.state.artistMVs
+
 
   axios.post('http://localhost:3001/favo5', {
-    name: 'JAYX'
+  artistName: artName,  
+  artistVideos: artVids
   })
   .then(function (response) {
     console.log(response);
@@ -73,6 +90,10 @@ addFav(){
   // });
 
 }
+
+
+
+
 //selects a video from
 favArtistSelect(){
   console.log('load artist to page (awaiting api quota clearnace)')
