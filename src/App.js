@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       artistName: '',
       artistMVs: '',
+      // favoriteArtists: '' //?? maybe different route
       mainPlVid: ''
     }
     this.typingArtistName = this.typingArtistName.bind(this)
@@ -66,7 +67,7 @@ loadVidtoMainPlayer(youtubeid){
 }
 
 addFav(){
-  console.log(this.state.currentArtist)
+
   //add a faveOne element to fivofave
   var artName = this.state.currentArtist;
   var artVids = this.state.artistMVs
