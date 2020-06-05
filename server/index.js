@@ -39,17 +39,28 @@ app.get('/favo5', (req, res) => {
 app.post('/favo5', function(req,res){
   var addingArtistName = req.body.artistName;
   var addingArtistVideos = req.body.artistVideos
-  console.log(addingArtistVideos)
 // add artist to artist table
 
+  connection.query(`
+  INSERT INTO artists (artistName)
+  VALUES ('${addingArtistName}');
+`)
 
+connection.query(`
+    SELECT id FROM artists WHERE artistName='${addingArtistName}'
+`, function(error, results, fields){
+  console.log(results[0].id)
 
+  //add info to other table
   addingArtistVideos.forEach(video => {
-    console.log(`
-    INSERT INTO artMusVidVault (artName,artVideos)
-    VALUES ('${addingArtistName}' , '${video.videoID}');
+    connection.query(`
+    INSERT INTO artistMVs (description, vidID, vidTHMN, artistID)
+    VALUES ('${video.title}' , '${video.videoID}', '${video.thumbnail}', '${results[0].id}');
   `)
   });
+
+})
+
   //add info to database: artist name attached to video information
 //   connection.query(`
 //   INSERT INTO artMusVidVault (artName,artVideos)
