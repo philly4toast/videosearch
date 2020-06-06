@@ -11,18 +11,26 @@ export default class FivoFave extends React.Component {
 
 
 render(){
-  console.log('fivoFAVE', this.props)
-  const favoritesList = this.props.listInfo.map(artist =>{
-    //split artists into faveone components
+  var artistList = this.props.listInfo;
+  console.log( artistList)
 
 
-  })
+    const favoritesList = artistList.map(artist =>{
+      //split artists into faveone components
+      return (
+        
+          <FaveOne 
+            name={artist}
+          />
 
+      )
+    })
+  
+  // console.log('fivoFAVE', this.props)
   return(
     <div>
       <button onClick={this.props.addFav}>Add to Favo5 </button>
       <FaveOne onClick={this.props.favArtistSelect}/>
-
 
     </div>
   )

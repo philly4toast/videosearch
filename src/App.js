@@ -87,7 +87,6 @@ class App extends React.Component {
     this.setState({
       currentArtist: this.state.artistName,
       artistMVs: vidIdArr,
-      // mainPlVid: TLCsearch.items[0].id.videoId
       mainPlVid: vidIdArr[0].videoID
     })
 
