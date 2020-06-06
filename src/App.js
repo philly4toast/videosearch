@@ -124,8 +124,8 @@ class App extends React.Component {
 
 
   //selects a video from
-  favArtistSelect() {
-    console.log('load artist to page (awaiting api quota clearnace)')
+  favArtistSelect(props) {
+    console.log('make search in database for artist named: ',props)
   }
 
   render() {
