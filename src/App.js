@@ -8,14 +8,14 @@ import DRAKEsearch from './DRAKEsearch'
 const axios = require('axios')
 
 //temporary fix for quota maxing api
-const vidIdArr = DRAKEsearch.items.map(video => { 
+const vidIdArr = TLCsearch.items.map(video => { 
   return {
     videoID: video.id.videoId,
     title: video.snippet.title,
     thumbnail: video.snippet.thumbnails.default.url
   }
 })
-
+console.log(vidIdArr, 'vididarr')
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -112,7 +112,7 @@ class App extends React.Component {
       artistVideos: artVids
     })
       .then(function (response) {
-        console.log(response);
+        window.location.reload()
         //add a faveOne element to fivofave
 
       })
@@ -145,6 +145,7 @@ class App extends React.Component {
           <div>
 
             <FivoFave favArtistSelect={this.favArtistSelect} addFav={this.addFav} listInfo={this.state.favoriteArtists}/>
+            this is where some favs go
           </div>
 
         </header>
