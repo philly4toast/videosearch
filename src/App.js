@@ -7,15 +7,8 @@ import TLCsearch from './TLCsearch'
 import DRAKEsearch from './DRAKEsearch'
 const axios = require('axios')
 
-//temporary fix for quota maxing api
-const vidIdArr = DRAKEsearch.items.map(video => { 
-  return {
-    videoID: video.id.videoId,
-    title: video.snippet.title,
-    thumbnail: video.snippet.thumbnails.default.url
-  }
-})
-console.log(vidIdArr, 'vididarr')
+
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -35,6 +28,7 @@ class App extends React.Component {
 
   componentDidMount(){
     this.getFavList();
+    console.log('currentmvs', this.state.artistMVs)
   }
 
   getFavList(){
@@ -47,8 +41,8 @@ class App extends React.Component {
       for (var i = 0; i < responseArr.length; i++){
         resultsArr.push(responseArr[i].artistName)
       }
-
-      this.setState({favoriteArtists: resultsArr})
+        //is this necessary or is it just to restart the page? 
+      this.setState({favoriteArtists: resultsArr}) 
 
     });
   } 
@@ -74,19 +68,22 @@ class App extends React.Component {
     //   console.log(error);
     // });
 
-    //temporary standin for api quota limits ---> 
-    // var vidIdArr = TLCsearch.items.map(video => { 
-    //   return {
-    //     videoID: video.id.videoId,
-    //     title: video.snippet.title
-    //   }
-    // })
+    // temporary standin for api quota limits ---> 
+  //*ARTIST*search can be replaced with the api response from get request. 
+    var vidIdArr = TLCsearch.items.map(video => { 
+      return {
+        videoID: video.id.videoId,
+        title: video.snippet.title,
+        thumbnail: video.snippet.thumbnails.default.url
+      }
+    })
 
     console.log('try this one', vidIdArr[0].videoID)
 
 
     this.setState({
-      currentArtist: this.state.artistName,
+
+      currentArtist: this.state.artistName, //placeholder of what you typed
       artistMVs: vidIdArr,
       mainPlVid: vidIdArr[0].videoID
     })
@@ -147,7 +144,7 @@ class App extends React.Component {
 
           <div>
 
-            <FivoFave favArtistSelect={this.favArtistSelect} addFav={this.addFav} listInfo={this.state.favoriteArtists}/>
+            <FivoFave thumbs={'hello'} favArtistSelect={this.favArtistSelect} addFav={this.addFav} listInfo={this.state.favoriteArtists}/>
             this is where some favs go
           </div>
 
