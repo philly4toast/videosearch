@@ -12,12 +12,13 @@ export default class FivoFave extends React.Component {
 
 render(){
   var artistList = this.props.listInfo;
-  console.log( artistList)
+  // console.log( artistList)
   var favList = [];
   for (var i = 0; i < artistList.length; i++){
     favList.push((
       <FaveOne 
         name={artistList[i]}
+        onClick={this.props.favArtistSelect}
       />
   ))
   }
@@ -36,7 +37,6 @@ render(){
   return(
     <div>
       <button onClick={this.props.addFav}>Add to Favo5 </button>
-      <FaveOne onClick={this.props.favArtistSelect}/>
       {favList}
     </div>
   )

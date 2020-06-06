@@ -8,7 +8,7 @@ import DRAKEsearch from './DRAKEsearch'
 const axios = require('axios')
 
 //temporary fix for quota maxing api
-const vidIdArr = TLCsearch.items.map(video => { 
+const vidIdArr = DRAKEsearch.items.map(video => { 
   return {
     videoID: video.id.videoId,
     title: video.snippet.title,
@@ -30,6 +30,7 @@ class App extends React.Component {
     this.loadVidtoMainPlayer = this.loadVidtoMainPlayer.bind(this)
     this.favArtistSelect = this.favArtistSelect.bind(this)
     this.addFav = this.addFav.bind(this)
+    this.getFavList = this.getFavList.bind(this)
   }
 
   componentDidMount(){
@@ -112,10 +113,12 @@ class App extends React.Component {
       artistVideos: artVids
     })
       .then(function (response) {
-        window.location.reload()
-        //add a faveOne element to fivofave
-
+        console.log(response);
+        //may want to change so it just reloads component
+        
+        
       })
+      this.getFavList();
 
   }
 
