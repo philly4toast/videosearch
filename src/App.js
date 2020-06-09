@@ -42,51 +42,61 @@ class App extends React.Component {
         resultsArr.push(responseArr[i].artistName)
       }
         //is this necessary or is it just to restart the page? 
-      this.setState({favoriteArtists: resultsArr}) 
+        this.setState({favoriteArtists: resultsArr}) 
+        console.log(this.state.favoriteArtists)
 
     });
   } 
 
   searchArtist(event) {
-    // let searchArtist = this.state.artistName;
-    // let baseURL = 'https://www.googleapis.com/youtube/v3/'
-    // let requestURL = baseURL+'search?part=snippet'+
-    //                      '&type=video'+
-    //                      '&q=' + searchArtist + 'music+videos' +
-    //                      '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
+    let searchArtist = this.state.artistName;
+    let baseURL = 'https://www.googleapis.com/youtube/v3/'
+    let requestURL = baseURL+'search?part=snippet'+
+                         '&type=video'+
+                         '&q=' + searchArtist + 'music+videos' +
+                         '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
     // //disabled api call until clearance
     // console.log(requestURL)
-    // axios.get(requestURL)
-    // .then((response) => {
-    //   console.log(response.data.items)
-    //   this.setState({
-    //     currentArtist: this.state.artistName,
-    //     artistMVs: response.data.items,
-    //     mainPlVid: response.data.items[0].id.videoId
-    //   })
-    // }, (error) => {
-    //   console.log(error);
-    // });
+    axios.get(requestURL)
+    .then((response) => {
+      console.log('ARTISTsearch: ',response.data.items)
+//testing the swap 
+      var vidIdArr = response.data.items.map(video => { 
+        return {
+          videoID: video.id.videoId,
+          title: video.snippet.title,
+          thumbnail: video.snippet.thumbnails.default.url
+        }
+      })
+
+      this.setState({
+        currentArtist: this.state.artistName,
+        artistMVs: vidIdArr,
+        mainPlVid: vidIdArr[0].videoID
+      })
+    }, (error) => {
+      console.log(error);
+    });
 
     // temporary standin for api quota limits ---> 
   //*ARTIST*search can be replaced with the api response from get request. 
-    var vidIdArr = TLCsearch.items.map(video => { 
-      return {
-        videoID: video.id.videoId,
-        title: video.snippet.title,
-        thumbnail: video.snippet.thumbnails.default.url
-      }
-    })
+    // var vidIdArr = TLCsearch.items.map(video => { 
+    //   return {
+    //     videoID: video.id.videoId,
+    //     title: video.snippet.title,
+    //     thumbnail: video.snippet.thumbnails.default.url
+    //   }
+    // })
 
-    console.log('try this one', vidIdArr[0].videoID)
+    // console.log('try this one', vidIdArr[0].videoID)
 
 
-    this.setState({
+    // this.setState({
 
-      currentArtist: this.state.artistName, //placeholder of what you typed
-      artistMVs: vidIdArr,
-      mainPlVid: vidIdArr[0].videoID
-    })
+    //   currentArtist: this.state.artistName, //placeholder of what you typed
+    //   artistMVs: vidIdArr,
+    //   mainPlVid: vidIdArr[0].videoID
+    // })
 
 
     event.preventDefault()
@@ -101,20 +111,32 @@ class App extends React.Component {
   }
 
   addFav() {
-
+    
     var artName = this.state.currentArtist;
     var artVids = this.state.artistMVs
+    var favArtArr = this.state.favoriteArtists;
 
-    axios.post('http://localhost:3001/favo5', {
-      artistName: artName,
-      artistVideos: artVids
-    })
-      .then(function (response) {
-        console.log(response);
+    if (favArtArr.indexOf(artName) !== -1){
+      alert ('you already have that artist in!')
+
+    }else {
+
+      axios.post('http://localhost:3001/favo5', {
+        artistName: artName,
+        artistVideos: artVids
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+    }
+
+    //check if that artist already exists, if it doesnt, then 
+
+
+    //continue here
         //may want to change so it just reloads component
         
         
-      })
       this.getFavList();
 
   }
@@ -125,7 +147,15 @@ class App extends React.Component {
 
   //selects a video from
   favArtistSelect(props) {
-    console.log('make search in database for artist named: ',props)
+    
+    axios.get('http://localhost:3001/obtainFromDB')
+    .then(
+      console.log('did we????')
+    )
+
+
+
+    console.log('select id from artists where artistName=' + '"' + props + '"')
   }
 
   render() {
