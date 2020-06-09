@@ -25,6 +25,7 @@ class App extends React.Component {
     this.addFav = this.addFav.bind(this)
     this.getFavList = this.getFavList.bind(this)
     this.reloadArtist = this.reloadArtist.bind(this)
+    this.deleteArtist = this.deleteArtist.bind(this)
   }
 
   componentDidMount() {
@@ -58,7 +59,7 @@ class App extends React.Component {
     // .then((response) => {
 
     //swap ARTISTsearch with response.data
-    var vidIdArr = TLCsearch.items.map(video => {
+    var vidIdArr = DRAKEsearch.items.map(video => {
       return {
         videoID: video.id.videoId,
         key: video.id.videoId,
@@ -137,6 +138,13 @@ class App extends React.Component {
       })
   }
 
+  deleteArtist(artist){
+    let deleteCALL = 'DELETE FROM artistMVs, artists USING artistMVS inner JOIN artists on artists.ID = artistMVS.artistID where artistName='+ '"' + artist + '"';
+
+
+    console.log(deleteCALL)
+  }
+
   render() {
 
     // console.log('loaded artist: ',this.state.loadingArtist)
@@ -160,6 +168,7 @@ class App extends React.Component {
               addFav={this.addFav}
               listInfo={this.state.favoriteArtists}
               reloadArtist={this.reloadArtist}
+              deleteArtist={this.deleteArtist}
             />
 
           </div>
