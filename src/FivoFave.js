@@ -15,7 +15,9 @@ render(){
   for (var i = 0; i < artistList.length; i++){
     favList.push((
       <FaveOne 
+        
         name={artistList[i]}
+        key={artistList[i]}
         onClick={this.props.reloadArtist}
       />
   ))

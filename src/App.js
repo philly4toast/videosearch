@@ -22,20 +22,13 @@ class App extends React.Component {
     this.typingArtistName = this.typingArtistName.bind(this)
     this.searchArtist = this.searchArtist.bind(this)
     this.loadVidtoMainPlayer = this.loadVidtoMainPlayer.bind(this)
-    // this.favArtistSelect = this.favArtistSelect.bind(this)
     this.addFav = this.addFav.bind(this)
     this.getFavList = this.getFavList.bind(this)
-
-    
     this.reloadArtist = this.reloadArtist.bind(this)
-
   }
 
   componentDidMount() {
-
-    console.log('currentmvs', this.state.artistMVs)
     this.getFavList();
-    
   }
 
   getFavList() {
@@ -48,8 +41,6 @@ class App extends React.Component {
         }
         //is this necessary or is it just to restart the page? 
         this.setState({ favoriteArtists: resultsArr })
-        console.log("favorite artists: ", this.state.favoriteArtists)
-
       });
   }
 
@@ -60,8 +51,8 @@ class App extends React.Component {
       '&type=video' +
       '&q=' + searchArtist + 'music+videos' +
       '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
-    // //disabled api call until clearance
 
+    // //disabled api call until clearance
 
     // axios.get(requestURL)
     // .then((response) => {
@@ -70,12 +61,11 @@ class App extends React.Component {
     var vidIdArr = TLCsearch.items.map(video => {
       return {
         videoID: video.id.videoId,
+        key: video.id.videoId,
         title: video.snippet.title,
         thumbnail: video.snippet.thumbnails.default.url
       }
     })
-    console.log('VIDEO ID ARR', vidIdArr)
-
 
     this.setState({
       currentArtist: this.state.artistName,
@@ -83,12 +73,10 @@ class App extends React.Component {
       mainPlVid: vidIdArr[0].videoID
     })
 
-    
 
     // }, (error) => {
     //   console.log(error);
     // });
-
 
     event.preventDefault()
   }
@@ -126,24 +114,20 @@ class App extends React.Component {
 
   }
 
-  reloadArtist(artist){
-    
+  reloadArtist(artist) {
+
     var reqURL = 'SELECT artistMVs.id, description, vidID, vidTHMN FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName=' + '"' + artist + '"';
     axios.put('http://localhost:3001/obtainFromDB', {
       requestURL: reqURL
     })
-      .then( (response)=> {
-        const renamedResponse = response.data.map(videos =>  {
+      .then((response) => {
+        const renamedResponse = response.data.map(videos => {
           return {
             thumbnail: videos.vidTHMN,
             title: videos.description,
             videoID: videos.vidID
           }
-          
         })
-        console.log(renamedResponse);
-
-        //rename the identifiers for data to match that of video list
 
         this.setState({
           currentArtist: artist,
@@ -153,25 +137,10 @@ class App extends React.Component {
       })
   }
 
+  render() {
 
-  //places artist on state --> doesn't call accurately
-  // favArtistSelect(props) {
-  //   var placeHolder;
-  //   var reqURL = 'SELECT artistMVs.id, description, vidID, vidTHMN FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName=' + '"' + props + '"';
-  //   axios.put('http://localhost:3001/obtainFromDB', {
-  //     requestURL: reqURL
-  //   })
-  //     .then(function (response) {
-  //       console.log('where is this being called', response.data);
-  //       this.reloadArtist(response)
-  //     })
-
-  //       }
-        
-        render() {
-          
-          // console.log('loaded artist: ',this.state.loadingArtist)
-          return (
+    // console.log('loaded artist: ',this.state.loadingArtist)
+    return (
       <div className="App">
         <header className="App-header">
           <form className='searchBr' onSubmit={this.searchArtist}>
@@ -186,6 +155,7 @@ class App extends React.Component {
           <div>
             FAVORITE MVS
             <FivoFave
+
               favArtistSelect={this.favArtistSelect}
               addFav={this.addFav}
               listInfo={this.state.favoriteArtists}

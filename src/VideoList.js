@@ -9,16 +9,16 @@ class VideoList extends React.Component {
     var currentArtistVideos = donkey;
     if (this.props.musicVideos) {
       currentArtistVideos = donkey.map(musicVideo => {
-        return (<div>
+        return (
 
           <VideoItem
-            key={musicVideo.id}
+            key={musicVideo.videoID}
             videoId={musicVideo.videoID}
             thumbnail={musicVideo.thumbnail}
             info={musicVideo.title}
             onClick={this.props.onClick}
           />
-        </div>
+
         )
       })
     }
