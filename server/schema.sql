@@ -58,3 +58,10 @@ ALTER TABLE `artistMVs` ADD FOREIGN KEY (artistID) REFERENCES `artists` (`id`);
 
 -- INSERT INTO `artists` (`artistName`) VALUES
 -- ('H.O.T');
+
+
+SELECT * FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName='drake';
+
+id, description, vidID, vidTHMN
+
+SELECT artistMVs.id, description, vidID, vidTHMN FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName='drake';

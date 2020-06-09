@@ -26,55 +26,55 @@ class App extends React.Component {
     this.getFavList = this.getFavList.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getFavList();
     console.log('currentmvs', this.state.artistMVs)
   }
 
-  getFavList(){
+  getFavList() {
     axios.get('http://localhost:3001/favo5')
-    .then(response => {
-      console.log('returned to fe:', response.data);
+      .then(response => {
+        console.log('returned to fe:', response.data);
 
-      var responseArr = response.data;
-      var resultsArr = [];
-      for (var i = 0; i < responseArr.length; i++){
-        resultsArr.push(responseArr[i].artistName)
-      }
+        var responseArr = response.data;
+        var resultsArr = [];
+        for (var i = 0; i < responseArr.length; i++) {
+          resultsArr.push(responseArr[i].artistName)
+        }
         //is this necessary or is it just to restart the page? 
-        this.setState({favoriteArtists: resultsArr}) 
+        this.setState({ favoriteArtists: resultsArr })
         console.log(this.state.favoriteArtists)
 
-    });
-  } 
+      });
+  }
 
   searchArtist(event) {
     let searchArtist = this.state.artistName;
     let baseURL = 'https://www.googleapis.com/youtube/v3/'
-    let requestURL = baseURL+'search?part=snippet'+
-                         '&type=video'+
-                         '&q=' + searchArtist + 'music+videos' +
-                         '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
+    let requestURL = baseURL + 'search?part=snippet' +
+      '&type=video' +
+      '&q=' + searchArtist + 'music+videos' +
+      '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
     // //disabled api call until clearance
 
 
     // axios.get(requestURL)
     // .then((response) => {
 
-//swap ARTISTsearch with response.data
-      var vidIdArr = TLCsearch.items.map(video => { 
-        return {
-          videoID: video.id.videoId,
-          title: video.snippet.title,
-          thumbnail: video.snippet.thumbnails.default.url
-        }
-      })
+    //swap ARTISTsearch with response.data
+    var vidIdArr = TLCsearch.items.map(video => {
+      return {
+        videoID: video.id.videoId,
+        title: video.snippet.title,
+        thumbnail: video.snippet.thumbnails.default.url
+      }
+    })
 
-      this.setState({
-        currentArtist: this.state.artistName,
-        artistMVs: vidIdArr,
-        mainPlVid: vidIdArr[0].videoID
-      })
+    this.setState({
+      currentArtist: this.state.artistName,
+      artistMVs: vidIdArr,
+      mainPlVid: vidIdArr[0].videoID
+    })
 
     // }, (error) => {
     //   console.log(error);
@@ -93,16 +93,16 @@ class App extends React.Component {
   }
 
   addFav() {
-    
+
     var artName = this.state.currentArtist;
     var artVids = this.state.artistMVs
     var favArtArr = this.state.favoriteArtists;
 
-    if (favArtArr.indexOf(artName) !== -1){
+    if (favArtArr.indexOf(artName) !== -1) {
 
-      alert ('you already have that artist in!')
+      alert('you already have that artist in!')
       return
-    }else {
+    } else {
 
       axios.post('http://localhost:3001/favo5', {
         artistName: artName,
@@ -117,27 +117,34 @@ class App extends React.Component {
 
 
     //continue here
-        //may want to change so it just reloads component
-        
-        
-      this.getFavList();
+    //may want to change so it just reloads component
+
+
+    this.getFavList();
 
   }
 
 
 
-
-
   //selects a video from
   favArtistSelect(props) {
-    var reqURL = 'select id from artists where artistName=' + '"' + props + '"'
-    axios.post('http://localhost:3001/obtainFromDB', {
-        loadingArtist: props,
-        requestURL: reqURL
+    var reqURL = 'SELECT artistMVs.id, description, vidID, vidTHMN FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName=' + '"' + props + '"';
+    axios.put('http://localhost:3001/obtainFromDB', {
+      requestURL: reqURL
     })
-    .then(function (response) {
-      console.log(response.data);
-    })
+      .then(function (response) {
+        console.log(response.data);
+        
+        //THIS is bound to child component when this function is called
+        // this.setState(
+        //   {
+        //     artistMvs: response.data
+        //   }
+        // )
+
+
+      })
+
   }
 
   render() {
@@ -155,9 +162,9 @@ class App extends React.Component {
           </div>
 
           <div>
-
-            <FivoFave thumbs={'hello'} favArtistSelect={this.favArtistSelect} addFav={this.addFav} listInfo={this.state.favoriteArtists}/>
-            this is where some favs go
+            FAVORITE MVS
+            <FivoFave favArtistSelect={this.favArtistSelect} addFav={this.addFav} listInfo={this.state.favoriteArtists}/>
+            
           </div>
 
         </header>

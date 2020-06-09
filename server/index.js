@@ -35,22 +35,15 @@ app.get('/favo5', (req, res) => {
  })
 });
 
-app.post('/obtainFromDB', (req, res) => {
-  var findingID = req.body.requestURL
-  var findingMVS;
-  connection.query(findingID, function (error, results, fields){
-    var selectedID = results[0].id
-    findingMVS = 'select * from artists where artistid='+selectedID
-    console.log(findingMVS)
-
-    connection.query(findingMVS, function (error, results, fields){
-      console.log('theMVS we need!: ', results)
-    })
-
+app.put('/obtainFromDB', (req, res) => {
+  var findingMVs = req.body.requestURL
+  // console.log(findingMVs)
+  connection.query(findingMVs, function (error, results, fields){
+    console.log('are we getting', results)
+    res.send(results)
   })
+  
 
-
-  res.send('Got a post request at /obtainFromDB')
 
 })
 

@@ -6,10 +6,6 @@ import FaveOne from './FaveOne'
 
 export default class FivoFave extends React.Component {
 
-//component did mount
-// axiosGET the database and map the database and create a <div> list with all artist info added to <faveOne> components
-
-
 render(){
   var artistList = this.props.listInfo;
   // console.log( artistList)
