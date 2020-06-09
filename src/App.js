@@ -56,12 +56,13 @@ class App extends React.Component {
                          '&q=' + searchArtist + 'music+videos' +
                          '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
     // //disabled api call until clearance
-    // console.log(requestURL)
-    axios.get(requestURL)
-    .then((response) => {
-      console.log('ARTISTsearch: ',response.data.items)
-//testing the swap 
-      var vidIdArr = response.data.items.map(video => { 
+
+
+    // axios.get(requestURL)
+    // .then((response) => {
+
+//swap ARTISTsearch with response.data
+      var vidIdArr = TLCsearch.items.map(video => { 
         return {
           videoID: video.id.videoId,
           title: video.snippet.title,
@@ -74,29 +75,10 @@ class App extends React.Component {
         artistMVs: vidIdArr,
         mainPlVid: vidIdArr[0].videoID
       })
-    }, (error) => {
-      console.log(error);
-    });
 
-    // temporary standin for api quota limits ---> 
-  //*ARTIST*search can be replaced with the api response from get request. 
-    // var vidIdArr = TLCsearch.items.map(video => { 
-    //   return {
-    //     videoID: video.id.videoId,
-    //     title: video.snippet.title,
-    //     thumbnail: video.snippet.thumbnails.default.url
-    //   }
-    // })
-
-    // console.log('try this one', vidIdArr[0].videoID)
-
-
-    // this.setState({
-
-    //   currentArtist: this.state.artistName, //placeholder of what you typed
-    //   artistMVs: vidIdArr,
-    //   mainPlVid: vidIdArr[0].videoID
-    // })
+    // }, (error) => {
+    //   console.log(error);
+    // });
 
 
     event.preventDefault()
@@ -117,8 +99,9 @@ class App extends React.Component {
     var favArtArr = this.state.favoriteArtists;
 
     if (favArtArr.indexOf(artName) !== -1){
-      alert ('you already have that artist in!')
 
+      alert ('you already have that artist in!')
+      return
     }else {
 
       axios.post('http://localhost:3001/favo5', {
@@ -147,15 +130,14 @@ class App extends React.Component {
 
   //selects a video from
   favArtistSelect(props) {
-    
-    axios.get('http://localhost:3001/obtainFromDB')
-    .then(
-      console.log('did we????')
-    )
-
-
-
-    console.log('select id from artists where artistName=' + '"' + props + '"')
+    var reqURL = 'select id from artists where artistName=' + '"' + props + '"'
+    axios.post('http://localhost:3001/obtainFromDB', {
+        loadingArtist: props,
+        requestURL: reqURL
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
   }
 
   render() {

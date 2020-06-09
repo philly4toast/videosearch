@@ -30,11 +30,29 @@ connection.connect();
 //handles request for getting all favorited artist music videos
 app.get('/favo5', (req, res) => {
   connection.query('SELECT artistName FROM artists;', function (error, results, fields) {
-    console.log('be', results)
     res.send(results)
     if (error) throw error;
  })
 });
+
+app.post('/obtainFromDB', (req, res) => {
+  var findingID = req.body.requestURL
+  var findingMVS;
+  connection.query(findingID, function (error, results, fields){
+    var selectedID = results[0].id
+    findingMVS = 'select * from artists where artistid='+selectedID
+    console.log(findingMVS)
+
+    connection.query(findingMVS, function (error, results, fields){
+      console.log('theMVS we need!: ', results)
+    })
+
+  })
+
+
+  res.send('Got a post request at /obtainFromDB')
+
+})
 
 app.post('/favo5', function(req,res){
   var addingArtistName = req.body.artistName;
