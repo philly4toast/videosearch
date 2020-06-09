@@ -16,26 +16,31 @@ class App extends React.Component {
       artistName: '',
       artistMVs: '',
       favoriteArtists: '', //?? maybe different route
-      mainPlVid: ''
+      mainPlVid: '',
+      loadingArtist: ''
     }
     this.typingArtistName = this.typingArtistName.bind(this)
     this.searchArtist = this.searchArtist.bind(this)
     this.loadVidtoMainPlayer = this.loadVidtoMainPlayer.bind(this)
-    this.favArtistSelect = this.favArtistSelect.bind(this)
+    // this.favArtistSelect = this.favArtistSelect.bind(this)
     this.addFav = this.addFav.bind(this)
     this.getFavList = this.getFavList.bind(this)
+
+    
+    this.reloadArtist = this.reloadArtist.bind(this)
+
   }
 
   componentDidMount() {
-    this.getFavList();
+
     console.log('currentmvs', this.state.artistMVs)
+    this.getFavList();
+    
   }
 
   getFavList() {
     axios.get('http://localhost:3001/favo5')
       .then(response => {
-        console.log('returned to fe:', response.data);
-
         var responseArr = response.data;
         var resultsArr = [];
         for (var i = 0; i < responseArr.length; i++) {
@@ -43,7 +48,7 @@ class App extends React.Component {
         }
         //is this necessary or is it just to restart the page? 
         this.setState({ favoriteArtists: resultsArr })
-        console.log(this.state.favoriteArtists)
+        console.log("favorite artists: ", this.state.favoriteArtists)
 
       });
   }
@@ -69,12 +74,16 @@ class App extends React.Component {
         thumbnail: video.snippet.thumbnails.default.url
       }
     })
+    console.log('VIDEO ID ARR', vidIdArr)
+
 
     this.setState({
       currentArtist: this.state.artistName,
       artistMVs: vidIdArr,
       mainPlVid: vidIdArr[0].videoID
     })
+
+    
 
     // }, (error) => {
     //   console.log(error);
@@ -113,43 +122,56 @@ class App extends React.Component {
         })
     }
 
-    //check if that artist already exists, if it doesnt, then 
-
-
-    //continue here
-    //may want to change so it just reloads component
-
-
     this.getFavList();
 
   }
 
-
-
-  //selects a video from
-  favArtistSelect(props) {
-    var reqURL = 'SELECT artistMVs.id, description, vidID, vidTHMN FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName=' + '"' + props + '"';
+  reloadArtist(artist){
+    
+    var reqURL = 'SELECT artistMVs.id, description, vidID, vidTHMN FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName=' + '"' + artist + '"';
     axios.put('http://localhost:3001/obtainFromDB', {
       requestURL: reqURL
     })
-      .then(function (response) {
-        console.log(response.data);
-        
-        //THIS is bound to child component when this function is called
-        // this.setState(
-        //   {
-        //     artistMvs: response.data
-        //   }
-        // )
+      .then( (response)=> {
+        const renamedResponse = response.data.map(videos =>  {
+          return {
+            thumbnail: videos.vidTHMN,
+            title: videos.description,
+            videoID: videos.vidID
+          }
+          
+        })
+        console.log(renamedResponse);
 
+        //rename the identifiers for data to match that of video list
 
+        this.setState({
+          currentArtist: artist,
+          artistMVs: renamedResponse,
+          mainPlVid: renamedResponse[0].videoID
+        })
       })
-
   }
 
-  render() {
 
-    return (
+  //places artist on state --> doesn't call accurately
+  // favArtistSelect(props) {
+  //   var placeHolder;
+  //   var reqURL = 'SELECT artistMVs.id, description, vidID, vidTHMN FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName=' + '"' + props + '"';
+  //   axios.put('http://localhost:3001/obtainFromDB', {
+  //     requestURL: reqURL
+  //   })
+  //     .then(function (response) {
+  //       console.log('where is this being called', response.data);
+  //       this.reloadArtist(response)
+  //     })
+
+  //       }
+        
+        render() {
+          
+          // console.log('loaded artist: ',this.state.loadingArtist)
+          return (
       <div className="App">
         <header className="App-header">
           <form className='searchBr' onSubmit={this.searchArtist}>
@@ -163,8 +185,13 @@ class App extends React.Component {
 
           <div>
             FAVORITE MVS
-            <FivoFave favArtistSelect={this.favArtistSelect} addFav={this.addFav} listInfo={this.state.favoriteArtists}/>
-            
+            <FivoFave
+              favArtistSelect={this.favArtistSelect}
+              addFav={this.addFav}
+              listInfo={this.state.favoriteArtists}
+              reloadArtist={this.reloadArtist}
+            />
+
           </div>
 
         </header>
