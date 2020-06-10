@@ -159,15 +159,11 @@ if (answer) {
     data: {deleterURL: deleteCALL}
 })
 .then(response => {
-  window.location.reload()
+  this.getFavList();
 })
-
-  // console.log(deleteCALL)
-
 }
 else {
-  console.log('artist NOT deleted')
-
+  alert(artist + ' NOT deleted')
 }
 
   }

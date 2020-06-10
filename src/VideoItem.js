@@ -4,7 +4,7 @@ import React from 'react'
 function VideoItem(props) {
   if (props.videoId){
     return (
-      <div style={{'float' : 'left' }} onClick={()=>props.onClick(props.videoId)} className='video'>
+      <div style={{'display': 'block', 'textAlign' : 'left'}} onClick={()=>props.onClick(props.videoId)} className='video'>
         <img src={props.thumbnail} alt=''/>
         {props.info}
       </div>
