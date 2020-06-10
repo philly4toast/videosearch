@@ -65,3 +65,5 @@ SELECT * FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID wh
 id, description, vidID, vidTHMN
 
 SELECT artistMVs.id, description, vidID, vidTHMN FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName='drake';
+SELECT * FROM artistMVs inner JOIN artists on artists.ID = artistMVS.artistID where artistName='drake';
+DELETE FROM artistMVs, artists USING artistMVS inner JOIN artists on artists.ID = artistMVS.artistID where artistName='drake';

@@ -25,8 +25,10 @@ render(){
 
   return(
     <div>
-      <button onClick={this.props.addFav}>Add to Favo5 </button>
+    <div>
       {favList}
+    </div > 
+      <button className='addingBtn' onClick={this.props.addFav}>add ARTIST to MUSIC BANK</button>
     </div>
   )
 }

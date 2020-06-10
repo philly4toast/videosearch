@@ -32,22 +32,21 @@ app.get('/favo5', (req, res) => {
   connection.query('SELECT artistName FROM artists;', function (error, results, fields) {
     res.send(results)
     if (error) throw error;
- })
+  })
 });
 
+//handler for loading a favorited artist
 app.put('/obtainFromDB', (req, res) => {
   var findingMVs = req.body.requestURL
   // console.log(findingMVs)
-  connection.query(findingMVs, function (error, results, fields){
+  connection.query(findingMVs, function (error, results, fields) {
     console.log('are we getting', results)
     res.send(results)
   })
-  
-
-
 })
 
-app.post('/favo5', function(req,res){
+//adding artist and videos to tables in DB
+app.post('/favo5', function (req, res) {
   var addingArtistName = req.body.artistName;
   var addingArtistVideos = req.body.artistVideos
 
@@ -56,22 +55,27 @@ app.post('/favo5', function(req,res){
   INSERT INTO artists (artistName)
   VALUES ('${addingArtistName}');
 `)
-
-connection.query(`
+  connection.query(`
     SELECT id FROM artists WHERE artistName='${addingArtistName}'
-`, function(error, results, fields){
-  console.log(results[0].id)
-
-  //add musicvideoinfo to 2nd table
-  addingArtistVideos.forEach(video => {
-    connection.query(`
+`, function (error, results, fields) {
+    console.log(results[0].id)
+    //add musicvideoinfo to 2nd table
+    addingArtistVideos.forEach(video => {
+      connection.query(`
     INSERT INTO artistMVs (description, vidID, vidTHMN, artistID)
     VALUES ('${video.title}' , '${video.videoID}', '${video.thumbnail}', '${results[0].id}');
   `)
-  });
+    });
+  })
+  res.send('Got a post request at /favorites')
 })
 
+//handles deleting a favorited artist
+app.delete('/favo5', function (req, res){
+  let deletingArtist = req.body.deleterURL;
+  console.log(deletingArtist)
+  connection.query(deletingArtist)
 
 
-  res.send('Got a post request at /favorites')
+  res.send('Got a delete request at /favo5')
 })

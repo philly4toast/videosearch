@@ -14,12 +14,12 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-image: url('https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/56951209_1186434264847534_2802208462602240_n.jpg?_nc_cat=100&_nc_sid=8bfeb9&_nc_ohc=Y7c1Nx3ko3oAX9c4ODP&_nc_ht=scontent-sjc3-1.xx&oh=1a004419f95dc9f9e4a9d0da5596e497&oe=5F057452'); */
+  background: linear-gradient(rgba(84, 214, 183, 0.7), rgba(219,250, 53, 0.5)), url('https://scontent-sjc3-1.xx.fbcdn.net/v/t1.0-9/56951209_1186434264847534_2802208462602240_n.jpg?_nc_cat=100&_nc_sid=8bfeb9&_nc_ohc=Y7c1Nx3ko3oAX9c4ODP&_nc_ht=scontent-sjc3-1.xx&oh=1a004419f95dc9f9e4a9d0da5596e497&oe=5F057452');
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -65,4 +65,17 @@ padding: 90px;
   border: 1px solid #ccc;
 }
 
+#favorites {
+  display: table;
+  /* color: green; */
+}
 
+.vidList {
+  background-color: mediumslateblue;
+}
+
+.addingBtn {
+  margin: 50px 0 0 0;
+  background-color: gray;
+
+}

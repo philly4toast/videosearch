@@ -13,11 +13,11 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      currentArtist:'',
       artistName: '',
       artistMVs: '',
       favoriteArtists: '', //?? maybe different route
-      mainPlVid: '',
-      loadingArtist: ''
+      mainPlVid: ''
     }
     this.typingArtistName = this.typingArtistName.bind(this)
     this.searchArtist = this.searchArtist.bind(this)
@@ -47,39 +47,48 @@ class App extends React.Component {
 
   searchArtist(event) {
     let searchArtist = this.state.artistName;
-    let baseURL = 'https://www.googleapis.com/youtube/v3/'
-    let requestURL = baseURL + 'search?part=snippet' +
-      '&type=video' +
-      '&q=' + searchArtist + 'music+videos' +
-      '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
+    if (searchArtist.length < 1) {
+      alert('Search for an artist name')
+      event.preventDefault()
+      return;
+    }else{
 
-    // //disabled api call until clearance
+      let baseURL = 'https://www.googleapis.com/youtube/v3/'
+      let requestURL = baseURL + 'search?part=snippet' +
+        '&type=video' +
+        '&q=' + searchArtist + 'music+videos' +
+        '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
+  
+      // //disabled api call until clearance
+  
+      // axios.get(requestURL)
+      // .then((response) => {
+  
+      //swap ARTISTsearch with response.data
+      var vidIdArr = DRAKEsearch.items.map(video => {
+        return {
+          videoID: video.id.videoId,
+          key: video.id.videoId,
+          title: video.snippet.title,
+          thumbnail: video.snippet.thumbnails.default.url
+        }
+      })
+  
+      this.setState({
+        currentArtist: this.state.artistName,
+        artistMVs: vidIdArr,
+        mainPlVid: vidIdArr[0].videoID
+      })
+  
+  
+      // }, (error) => {
+      //   console.log(error);
+      // });
+  
+      event.preventDefault()
+    }
 
-    // axios.get(requestURL)
-    // .then((response) => {
-
-    //swap ARTISTsearch with response.data
-    var vidIdArr = DRAKEsearch.items.map(video => {
-      return {
-        videoID: video.id.videoId,
-        key: video.id.videoId,
-        title: video.snippet.title,
-        thumbnail: video.snippet.thumbnails.default.url
-      }
-    })
-
-    this.setState({
-      currentArtist: this.state.artistName,
-      artistMVs: vidIdArr,
-      mainPlVid: vidIdArr[0].videoID
-    })
-
-
-    // }, (error) => {
-    //   console.log(error);
-    // });
-
-    event.preventDefault()
+    
   }
 
   typingArtistName(event) {
@@ -100,7 +109,10 @@ class App extends React.Component {
 
       alert('you already have that artist in!')
       return
-    } else {
+    } else if (artName.length < 1 || artName === undefined){
+      alert('Search for music videos')
+    } 
+    else {
 
       axios.post('http://localhost:3001/favo5', {
         artistName: artName,
@@ -139,42 +151,61 @@ class App extends React.Component {
   }
 
   deleteArtist(artist){
-    let deleteCALL = 'DELETE FROM artistMVs, artists USING artistMVS inner JOIN artists on artists.ID = artistMVS.artistID where artistName='+ '"' + artist + '"';
 
+var answer = window.confirm("Are you sure you want to delete artist?")
+if (answer) {
+  let deleteCALL = 'DELETE FROM artistMVs, artists USING artistMVS inner JOIN artists on artists.ID = artistMVS.artistID where artistName='+ '"' + artist + '"';
+  axios.delete('http://localhost:3001/favo5', {
+    data: {deleterURL: deleteCALL}
+})
+.then(response => {
+  window.location.reload()
+})
 
-    console.log(deleteCALL)
+  // console.log(deleteCALL)
+
+}
+else {
+  console.log('artist NOT deleted')
+
+}
+
   }
 
   render() {
 
-    // console.log('loaded artist: ',this.state.loadingArtist)
+
     return (
       <div className="App">
         <header className="App-header">
-          <form className='searchBr' onSubmit={this.searchArtist}>
-            <input type="text" placeholder="Search.." onChange={this.typingArtistName}></input>
-            <button>Find music videos!!!!!</button>
-          </form>
 
-          <div style={{ 'backgroundImage': `url(${'./old-television-12.png'})` }} className='mainPlayerTV'>
-            <MainPlayer vidInfo={this.state.mainPlVid} />
-          </div>
-
-          <div>
-            FAVORITE MVS
+        <div className='favorites'>
+            <h1>music... BANK!</h1>
             <FivoFave
-
               favArtistSelect={this.favArtistSelect}
               addFav={this.addFav}
               listInfo={this.state.favoriteArtists}
               reloadArtist={this.reloadArtist}
               deleteArtist={this.deleteArtist}
             />
-
           </div>
 
+          <form className='searchBr' onSubmit={this.searchArtist}>
+            <input type="text" placeholder="Search.." onChange={this.typingArtistName}></input>
+            <button>Find music videos!</button>
+          </form>
+
+          <div style={{ 'backgroundImage': `url(${'./old-television-12.png'})` }} className='mainPlayerTV'>
+            <MainPlayer vidInfo={this.state.mainPlVid} />
+          </div>
+
+      <div className='vidList'>
+            <VideoList onClick={this.loadVidtoMainPlayer} musicVideos={this.state.artistMVs} />
+
+      </div>
+
+
         </header>
-        <VideoList onClick={this.loadVidtoMainPlayer} musicVideos={this.state.artistMVs} />
       </div>
     );
   }
