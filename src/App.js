@@ -5,6 +5,9 @@ import VideoList from './VideoList'
 import FivoFave from './FivoFave'
 import TLCsearch from './TLCsearch'
 import DRAKEsearch from './DRAKEsearch'
+import MEGANSTALsearch from './MEGANSTALsearch'
+import CHILDISHsearch from './CHILDISHsearch'
+
 const axios = require('axios')
 
 
@@ -59,13 +62,13 @@ class App extends React.Component {
         '&q=' + searchArtist + 'music+videos' +
         '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
   
-      // //disabled api call until clearance
+      //disabled api call until clearance
   
-      // axios.get(requestURL)
-      // .then((response) => {
+      axios.get(requestURL)
+      .then((response) => {
   
-      //swap ARTISTsearch with response.data
-      var vidIdArr = DRAKEsearch.items.map(video => {
+      // swap ARTISTsearch with response.data
+      var vidIdArr = response.data.items.map(video => {
         return {
           videoID: video.id.videoId,
           key: video.id.videoId,
@@ -81,9 +84,9 @@ class App extends React.Component {
       })
   
   
-      // }, (error) => {
-      //   console.log(error);
-      // });
+      }, (error) => {
+        console.log(error);
+      });
   
       event.preventDefault()
     }

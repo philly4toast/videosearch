@@ -26,3 +26,10 @@ axios.get(requestURL)
 
 console.log('hello world')
 
+let baseURL = 'https://www.googleapis.com/youtube/v3/'
+      let requestURL = baseURL + 'search?part=snippet' +
+        '&type=video' +
+        '&q=' + searchArtist + 'music+videos' +
+        '&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ';
+
+        curl https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=megan+the+stallion+music+videos&key=AIzaSyC8JlqzKhJjsirGk71XH94ziySBeLb-iUQ
