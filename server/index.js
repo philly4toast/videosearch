@@ -38,9 +38,7 @@ app.get('/favo5', (req, res) => {
 //handler for loading a favorited artist
 app.put('/obtainFromDB', (req, res) => {
   var findingMVs = req.body.requestURL
-  // console.log(findingMVs)
   connection.query(findingMVs, function (error, results, fields) {
-    console.log('are we getting', results)
     res.send(results)
   })
 })
@@ -55,9 +53,8 @@ app.post('/favo5', function (req, res) {
   INSERT INTO artists (artistName)
   VALUES ('${addingArtistName}');
 `)
-  connection.query(`
-    SELECT id FROM artists WHERE artistName='${addingArtistName}'
-`, function (error, results, fields) {
+  const fetchArtistQuery = `SELECT id FROM artists WHERE artistName='${addingArtistName}'`
+  connection.query(fetchArtistQuery, (error, results, fields) => {
     console.log(results[0].id)
     //add musicvideoinfo to 2nd table
     addingArtistVideos.forEach(video => {
@@ -75,7 +72,6 @@ app.delete('/favo5', function (req, res){
   let deletingArtist = req.body.deleterURL;
   console.log(deletingArtist)
   connection.query(deletingArtist)
-
 
   res.send('Got a delete request at /favo5')
 })

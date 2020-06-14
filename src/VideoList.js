@@ -5,8 +5,7 @@ import VideoItem from './VideoItem'
 class VideoList extends React.Component {
 
   render() {
-    const donkey = this.props.musicVideos;
-    var currentArtistVideos = donkey;
+    const {musicVideo: currentArtistVideos } = this.props;
     if (this.props.musicVideos) {
       currentArtistVideos = donkey.map(musicVideo => {
         return (
