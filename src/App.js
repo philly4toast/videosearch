@@ -3,10 +3,10 @@ import MainPlayer from './MainPlayer'
 import './App.css';
 import VideoList from './VideoList'
 import FivoFave from './FivoFave'
-import TLCsearch from '../DATAsearchFiller/TLCsearch'
-import DRAKEsearch from '../DATAsearchFiller/DRAKEsearch'
-import MEGANSTALsearch from '../DATAsearchFiller/MEGANSTALsearch'
-import CHILDISHsearch from '../DATAsearchFiller/CHILDISHsearch'
+import TLCsearch from './DATAsearchFiller/TLCsearch'
+import DRAKEsearch from './DATAsearchFiller/DRAKEsearch'
+import MEGANSTALsearch from './DATAsearchFiller/MEGANSTALsearch'
+import CHILDISHsearch from './DATAsearchFiller/CHILDISHsearch'
 
 const axios = require('axios')
 
