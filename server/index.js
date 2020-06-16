@@ -40,7 +40,7 @@ app.put('/obtainFromDB', (req, res) => {
   var findingMVs = req.body.requestURL
   // console.log(findingMVs)
   connection.query(findingMVs, function (error, results, fields) {
-    console.log('are we getting', results)
+
     res.send(results)
   })
 })
@@ -73,7 +73,6 @@ app.post('/favo5', function (req, res) {
 //handles deleting a favorited artist
 app.delete('/favo5', function (req, res){
   let deletingArtist = req.body.deleterURL;
-  console.log(deletingArtist)
   connection.query(deletingArtist)
 
 
