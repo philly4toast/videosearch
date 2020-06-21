@@ -19,9 +19,10 @@
     "fe-dev": "react-scripts start",
     "be-dev": "npx nodemon server/index.js",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
+
   "eslintConfig": {
     "extends": "react-app"
   },
