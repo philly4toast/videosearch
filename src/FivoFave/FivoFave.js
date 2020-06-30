@@ -1,5 +1,5 @@
 import React from 'react';
-import FaveOne from './FaveOne'
+import FaveOne from '../FaveOne'
 
 
 
@@ -38,18 +38,22 @@ import FaveOne from './FaveOne'
 // }
 
 const FivoFave = (props) => {
-  var artistList = props.listInfo;
+  if (props.listInfo){
+    var artistList = props.listInfo;
+  
+    var favList = [];
+    for (var i = 0; i < artistList.length; i++){
+      favList.push((
+        <FaveOne 
+          pushButton={props.deleteArtist}
+          name={artistList[i]}
+          key={artistList[i]}
+          onClick={props.reloadArtist}
+        />
+    ))
+    }
 
-  var favList = [];
-  for (var i = 0; i < artistList.length; i++){
-    favList.push((
-      <FaveOne 
-        pushButton={props.deleteArtist}
-        name={artistList[i]}
-        key={artistList[i]}
-        onClick={props.reloadArtist}
-      />
-  ))
+
   }
   return (
     <div>

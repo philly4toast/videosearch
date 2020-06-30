@@ -12,7 +12,7 @@ it('renders Mainplayer without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it('renders Mainplayer correctly', ()=>{
-  const { getByTestId } = render(<MainPlayer vidInfo='M7FIvfx5J10'/>)
-  expect(videoId).toBe('M7FIvfx5J10')
-})
+// it('renders Mainplayer correctly', ()=>{
+//   const { getByTestId } = render(<MainPlayer vidInfo='M7FIvfx5J10'/>)
+//   expect(videoId).toBe('M7FIvfx5J10')
+// })

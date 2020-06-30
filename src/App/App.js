@@ -1,8 +1,8 @@
 import React from 'react';
 import MainPlayer from '../MainPlayer/MainPlayer'
 import './App.css';
-import VideoList from '../VideoList'
-import FivoFave from '../FivoFave'
+import VideoList from '../VideoList/VideoList'
+import FivoFave from '../FivoFave/FivoFave'
 import TLCsearch from '../zzzDATAsearchFill/TLCsearch'
 import DRAKEsearch from '../zzzDATAsearchFill/DRAKEsearch'
 import MEGANSTALsearch from '../zzzDATAsearchFill/MEGANSTALsearch'
