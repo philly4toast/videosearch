@@ -1,12 +1,12 @@
 import React from 'react';
-import MainPlayer from './MainPlayer'
+import MainPlayer from '../MainPlayer/MainPlayer'
 import './App.css';
-import VideoList from './VideoList'
-import FivoFave from './FivoFave'
-import TLCsearch from './DATAsearchFiller/TLCsearch'
-import DRAKEsearch from './DATAsearchFiller/DRAKEsearch'
-import MEGANSTALsearch from './DATAsearchFiller/MEGANSTALsearch'
-import CHILDISHsearch from './DATAsearchFiller/CHILDISHsearch'
+import VideoList from '../VideoList'
+import FivoFave from '../FivoFave'
+import TLCsearch from '../zzzDATAsearchFill/TLCsearch'
+import DRAKEsearch from '../zzzDATAsearchFill/DRAKEsearch'
+import MEGANSTALsearch from '../zzzDATAsearchFill/MEGANSTALsearch'
+import CHILDISHsearch from '../zzzDATAsearchFill/CHILDISHsearch'
 
 const axios = require('axios')
 
